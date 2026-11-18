@@ -26,8 +26,8 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        brandBlue: '#0b3c7c', /* Azul da identidade original */
-                        brandGold: '#cfa333', /* Dourado da identidade original */
+                        brandBlue: '#0b3c7c',
+                        brandGold: '#cfa333',
                         brandGoldLight: '#e6bd4f',
                     }
                 }
@@ -84,40 +84,38 @@
             background-size: cover;
             background-repeat: no-repeat;
         }      
+
+        /* CONTROLES DE TAMANHO DA LOGO NO HEADER */
+        /* Tamanho para Computador/Telas Grandes */
+        .logo-header {
+            width: 180px; /* AUMENTE OU DIMINUA ESTE VALOR PARA ALTERAR O TAMANHO */
+            height: auto; 
+            object-fit: contain;
+        }
+
+        /* Tamanho para Celular/Telas Menores */
+        @media (max-width: 768px) {
+            .logo-header {
+                width: 130px; /* AUMENTE OU DIMINUA ESTE VALOR PARA O MOBILE */
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased overflow-x-hidden">
 
     <!-- Header -->
     <header class="bg-brandBlue shadow-md sticky top-0 z-50">
-        <!-- COLE ESTE CÓDIGO NO LUGAR: -->
-<div class="flex items-center">
-    <img src="watermarked_img_7021271945180178197.jpg" alt="Logo Carro Fácil" class="logo-header">
-</div>
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <div class="flex items-center">
+                <img src="Gemini_Generated_Image_3f447o3f447o3f44.jpg" alt="Logo Carro Fácil" class="logo-header">
+            </div>
+            
             <a href="https://wa.me/5521998278563?text=Ol%C3%A1!%20Quero%20agendar%20uma%20visita!" target="_blank" class="hidden md:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-full font-semibold transition-colors shadow-sm">
                 <i class="fa-brands fa-whatsapp text-xl"></i> Fale Conosco
             </a>
+
         </div>
-
-      <!-- 2. Cole este bloco antes de fechar a tag </head> ou no final do arquivo para controlar os tamanhos: -->
-<style>
-  /* CONTROLES DE TAMANHO DA LOGO NO HEADER */
-  
-  /* Tamanho para Computador/Telas Grandes */
-  .logo-header {
-    width: 180px; /* AUMENTE OU DIMINUA ESTE VALOR PARA ALTERAR O TAMANHO */
-    height: auto; 
-    object-fit: contain;
-  }
-
-  /* Tamanho para Celular/Telas Menores */
-  @media (max-width: 768px) {
-    .logo-header {
-      width: 130px; /* AUMENTE OU DIMINUA ESTE VALOR PARA O MOBILE */
-    }
-  }
-</style>
-      
     </header>
 
     <!-- Hero Section -->
