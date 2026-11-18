@@ -243,16 +243,62 @@
     <!-- Initialization Scripts -->
     <script>
         // Dados dos veículos solicitados
+        // Dados dos veículos solicitados com as listas de imagens
         const carsData = [
-            { name: "Honda Civic G10", desc: "Design esportivo, conforto premium e tecnologia de ponta. O sedan que redefiniu a categoria.", price: "A partir de R$ 1.899/mês" },
-            { name: "Chevrolet Cruze", desc: "Motor turbo potente e econômico, com excelente espaço interno e conectividade avançada.", price: "A partir de R$ 1.599/mês" },
-            { name: "Mitsubishi L200", desc: "Força bruta e resistência 4x4. A picape ideal para o trabalho pesado e aventuras off-road.", price: "A partir de R$ 2.499/mês" },
-            { name: "Jeep Renegade", desc: "O SUV compacto mais desejado do Brasil. Estilo icônico com ótimo desempenho urbano.", price: "A partir de R$ 1.399/mês" },
-            { name: "Fiat Doblô", desc: "Versatilidade imbatível para o seu negócio ou família grande. Espaço de sobra.", price: "A partir de R$ 999/mês" },
-            { name: "Jeep Compass", desc: "Sofisticação, segurança e o puro DNA Jeep. O SUV médio líder de mercado.", price: "A partir de R$ 2.199/mês" },
-            { name: "Toyota Corolla XEI 2.0", desc: "Sinônimo de confiabilidade, conforto absoluto e excelente valor de revenda.", price: "A partir de R$ 1.999/mês" },
-            { name: "VW Voyage", desc: "Sedan popular, econômico e com a mecânica robusta e confiável da Volkswagen.", price: "A partir de R$ 799/mês" },
-            { name: "Renault Duster", desc: "Robustez, altura do solo elevada e o melhor custo-benefício da categoria SUV.", price: "A partir de R$ 1.199/mês" }
+            { 
+                name: "Honda Civic G10", 
+                desc: "Design esportivo, conforto premium e tecnologia de ponta. O sedan que redefiniu a categoria.", 
+                price: "A partir de R$ 1.899/mês",
+                images: ["1 - civic.jpg", "2 - civic.jpg", "3 - civic.jpg", "4 - civic.jpg", "5 - civic.jpg", "6 - civic.jpg", "7 - civic.jpg", "8 - civic.jpg", "9 - civic.jpg", "10 - civic.jpg", ] // <-- TROQUE PELOS NOMES DAS SUAS FOTOS AQUI
+            },
+            { 
+                name: "Chevrolet Cruze", 
+                desc: "Motor turbo potente e econômico, com excelente espaço interno e conectividade avançada.", 
+                price: "A partir de R$ 1.599/mês",
+                images: ["cruze-1.jpg", "cruze-2.jpg"] // Pode colocar quantas fotos quiser
+            },
+            { 
+                name: "Mitsubishi L200", 
+                desc: "Força bruta e resistência 4x4. A picape ideal para o trabalho pesado e aventuras off-road.", 
+                price: "A partir de R$ 2.499/mês",
+                images: ["l200-1.jpg", "l200-2.jpg", "l200-3.jpg"]
+            },
+            { 
+                name: "Jeep Renegade", 
+                desc: "O SUV compacto mais desejado do Brasil. Estilo icônico com ótimo desempenho urbano.", 
+                price: "A partir de R$ 1.399/mês",
+                images: ["renegade-1.jpg", "renegade-2.jpg"]
+            },
+            { 
+                name: "Fiat Doblô", 
+                desc: "Versatilidade imbatível para o seu negócio ou família grande. Espaço de sobra.", 
+                price: "A partir de R$ 999/mês",
+                images: ["doblo-1.jpg", "doblo-2.jpg"]
+            },
+            { 
+                name: "Jeep Compass", 
+                desc: "Sofisticação, segurança e o puro DNA Jeep. O SUV médio líder de mercado.", 
+                price: "A partir de R$ 2.199/mês",
+                images: ["compass-1.jpg", "compass-2.jpg"]
+            },
+            { 
+                name: "Toyota Corolla XEI 2.0", 
+                desc: "Sinônimo de confiabilidade, conforto absoluto e excelente valor de revenda.", 
+                price: "A partir de R$ 1.999/mês",
+                images: ["corolla-1.jpg", "corolla-2.jpg", "corolla-3.jpg"]
+            },
+            { 
+                name: "VW Voyage", 
+                desc: "Sedan popular, econômico e com a mecânica robusta e confiável da Volkswagen.", 
+                price: "A partir de R$ 799/mês",
+                images: ["voyage-1.jpg", "voyage-2.jpg"]
+            },
+            { 
+                name: "Renault Duster", 
+                desc: "Robustez, altura do solo elevada e o melhor custo-benefício da categoria SUV.", 
+                price: "A partir de R$ 1.199/mês",
+                images: ["duster-1.jpg", "duster-2.jpg"]
+            }
         ];
 
         const carGrid = document.getElementById('car-grid');
@@ -260,25 +306,23 @@
 
         // Gerar os cards dos carros
         carsData.forEach((car, index) => {
-            // Encode WhatsApp Message dynamically based on car name
+            // Mensagem dinâmica do WhatsApp
             const message = encodeURIComponent(`Olá! Quero agendar uma visita pra ver o ${car.name}`);
             const waLink = `https://wa.me/${phone}?text=${message}`;
 
-            // Create 10 placeholder image slides for each car
+            // Criar os slides puxando as imagens reais do array "images" de cada carro
             let swiperSlides = '';
-            for(let i = 1; i <= 10; i++) {
-                // Using different background colors slightly to show it's a slide changing
-                const bgColor = 200 + (i * 5); 
+            car.images.forEach((foto, i) => {
                 swiperSlides += `
                     <div class="swiper-slide">
-                        <img src="https://placehold.co/600x400/e2e8f0/475569?text=${encodeURIComponent(car.name)}+-+Foto+${i}" alt="${car.name} Foto ${i}" class="w-full h-56 object-cover">
+                        <img src="${foto}" alt="${car.name} Foto ${i + 1}" class="w-full h-56 object-cover">
                     </div>
                 `;
-            }
+            });
 
             const cardHTML = `
                 <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col">
-                    <!-- Nested Swiper for Car Images -->
+                    
                     <div class="swiper car-swiper-${index} w-full relative group">
                         <div class="swiper-wrapper">
                             ${swiperSlides}
@@ -288,7 +332,6 @@
                         <div class="swiper-button-prev opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     
-                    <!-- Car Info -->
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-2xl font-bold text-gray-800">${car.name}</h3>
