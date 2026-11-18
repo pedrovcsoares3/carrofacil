@@ -135,7 +135,7 @@
             <!-- Overlay Gradient & Text -->
             <div class="absolute inset-0 bg-gradient-to-t from-brandBlue/90 via-brandBlue/40 to-transparent z-10 flex flex-col justify-end items-center text-center pb-16 px-4 pointer-events-none">
                 <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">A Chave do Seu Novo Carro Está Aqui!</h2>
-                <p class="text-lg md:text-xl text-brandGoldLight font-medium mb-6 drop-shadow-md">Realizamos o seu sonho do carro próprio todos os dias.</p>
+                <p class="text-lg md:text-xl text-brandGoldLight font-medium mb-6 drop-shadow-md">Realizamos o sonho de famílias e pessoas solteiras todos os dias.</p>
                 <a href="#estoque" class="pointer-events-auto bg-brandGold hover:bg-brandGoldLight text-brandBlue font-bold text-lg px-8 py-3 rounded-full transition-transform transform hover:scale-105 shadow-xl">
                     Ver Estoque
                 </a>
@@ -315,7 +315,7 @@
             car.images.forEach((foto, i) => {
                 swiperSlides += `
                     <div class="swiper-slide">
-                        <img src="${foto}" alt="${car.name} Foto ${i + 1}" class="w-full h-56 object-cover">
+                        <img src="${foto}" alt="${car.name} Foto ${i + 1}" onclick="openLightbox(${index}, ${i})" class="w-full h-56 object-cover cursor-pointer hover:opacity-95 transition-opacity" title="Clique para ampliar">
                     </div>
                 `;
             });
@@ -375,6 +375,80 @@
                 },
             });
         });
+
+        // Lógica do Popup (Lightbox) para ampliar as fotos
+        let lightboxSwiper = null;
+
+        function openLightbox(carIndex, photoIndex) {
+            const car = carsData[carIndex];
+            const modal = document.getElementById('lightbox-modal');
+            const wrapper = document.getElementById('lightbox-wrapper');
+            const title = document.getElementById('lightbox-title');
+
+            title.textContent = car.name;
+            wrapper.innerHTML = '';
+
+            car.images.forEach((foto, i) => {
+                wrapper.insertAdjacentHTML('beforeend', `
+                    <div class="swiper-slide flex items-center justify-center">
+                        <img src="${foto}" alt="${car.name} Foto ${i + 1}" class="max-h-[80vh] max-w-full object-contain rounded-lg shadow-2xl">
+                    </div>
+                `);
+            });
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            if (lightboxSwiper) {
+                lightboxSwiper.destroy(true, true);
+            }
+
+            lightboxSwiper = new Swiper('.lightbox-swiper', {
+                initialSlide: photoIndex,
+                loop: true,
+                keyboard: {
+                    enabled: true,
+                },
+                pagination: {
+                    el: '.lightbox-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.lightbox-next',
+                    prevEl: '.lightbox-prev',
+                },
+            });
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Fechar ao apertar a tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
     </script>
+
+    <!-- Popup (Lightbox) de Fotos Ampliadas -->
+    <div id="lightbox-modal" onclick="if(event.target === this) closeLightbox()" class="fixed inset-0 bg-black/90 z-[200] hidden flex-col items-center justify-center p-4">
+        <div class="w-full max-w-5xl flex justify-between items-center mb-3 px-2">
+            <h3 id="lightbox-title" class="text-white text-xl md:text-2xl font-bold"></h3>
+            <button onclick="closeLightbox()" class="text-white hover:text-brandGold text-4xl leading-none font-bold px-2 cursor-pointer">&times;</button>
+        </div>
+        
+        <div class="swiper lightbox-swiper w-full max-w-5xl">
+            <div class="swiper-wrapper" id="lightbox-wrapper">
+                <!-- Fotos ampliadas inseridas via JS -->
+            </div>
+            <div class="swiper-pagination lightbox-pagination mt-4"></div>
+            <div class="swiper-button-next lightbox-next"></div>
+            <div class="swiper-button-prev lightbox-prev"></div>
+        </div>
+    </div>
 </body>
 </html>
